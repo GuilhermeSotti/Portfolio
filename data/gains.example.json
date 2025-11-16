@@ -1,0 +1,26 @@
+{
+  "portfolio-site": {
+    "entries": [
+      { "label": "Receita (BRL)", "value": 12000 },
+      { "label": "Clientes", "value": 3 },
+      { "label": "Visibilidade (média mensal)", "value": 1500 }
+    ],
+    "timeline": [
+      { "date": "2024-01", "value": 1000 },
+      { "date": "2024-04", "value": 3000 },
+      { "date": "2024-08", "value": 6000 },
+      { "date": "2024-12", "value": 12000 }
+    ]
+  },
+  "open-source-lib": {
+    "entries": [
+      { "label": "Usuários estimados", "value": 5500 },
+      { "label": "Horas economizadas", "value": 340 }
+    ],
+    "timeline": [
+      { "date": "2023-01", "value": 100 },
+      { "date": "2023-06", "value": 700 },
+      { "date": "2024-01", "value": 3000 }
+    ]
+  }
+}

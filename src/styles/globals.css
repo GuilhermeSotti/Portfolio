@@ -1,0 +1,27 @@
+/* src/styles/globals.css */
+
+/* Tailwind directives (mantê-las no topo) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import dos módulos CSS locais (ordem importa: tokens -> base -> components -> utilitários) */
+@import "./tokens.css";
+@import "./base.css";
+@import "./layout.css";
+@import "./components.css";
+@import "./forms.css";
+@import "./charts.css";
+@import "./animations.css";
+@import "./dark.css";
+
+/* Pequeno reset extra e fallback para fontes */
+:root {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+/* Forçar altura mínima para evitar page shift */
+html, body, #__next {
+  height: 100%;
+}

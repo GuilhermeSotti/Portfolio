@@ -1,0 +1,69 @@
+/* src/styles/tokens.css */
+
+/* Design tokens: cores, espaçamento, radii, sombras, timing */
+:root {
+  /* palette */
+  --color-bg: #ffffff;
+  --color-surface: #ffffff;
+  --color-muted: #f3f4f6;
+  --color-border: #e5e7eb;
+  --color-text: #111827;
+  --color-subtext: #6b7280;
+  --color-accent: #6366f1;       /* indigo-500 */
+  --color-accent-600: #4f46e5;   /* indigo-600 */
+  --color-success: #10b981;
+  --color-danger: #ef4444;
+
+  /* grayscale */
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-700: #374151;
+
+  /* typography scale */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 1.875rem;  /* 30px */
+  --text-4xl: 2.25rem;   /* 36px */
+
+  /* spacing scale (px) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+
+  /* radii & shadows */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  --shadow-sm: 0 1px 2px rgba(16,24,40,0.05);
+  --shadow-md: 0 6px 24px rgba(16,24,40,0.08);
+
+  /* transitions */
+  --ease-fast: 160ms cubic-bezier(.4,0,.2,1);
+  --ease-med: 260ms cubic-bezier(.4,0,.2,1);
+  --ease-slow: 420ms cubic-bezier(.4,0,.2,1);
+}
+
+/* Dark tokens (class .dark toggles) */
+.dark {
+  --color-bg: #0b0c10;
+  --color-surface: #0f1724;
+  --color-muted: #0b1220;
+  --color-border: #1f2937;
+  --color-text: #f8fafc;
+  --color-subtext: #9ca3af;
+  --color-accent: #818cf8;
+  --color-accent-600: #6366f1;
+}

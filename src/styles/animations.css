@@ -1,0 +1,54 @@
+/* src/styles/animations.css */
+
+/* Fade-in upward */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fade-up var(--ease-med) both;
+}
+
+/* Subtle scale (for cards) */
+@keyframes pop {
+  from { transform: scale(.985); opacity: 0.0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.pop {
+  animation: pop var(--ease-fast) both;
+}
+
+/* smooth underline */
+.underline-from-left {
+  position: relative;
+}
+.underline-from-left::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -6px;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-600));
+  border-radius: 99px;
+  transition: width var(--ease-med);
+}
+.underline-from-left:hover::after { width: 100%; }
+
+/* spinner */
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--color-accent) 20%, transparent);
+  border-top-color: var(--color-accent);
+  animation: spin 850ms linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

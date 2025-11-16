@@ -1,0 +1,31 @@
+/* src/styles/dark.css */
+
+/* Usamos a classe .dark no <html> ou <body> para alternar */
+.dark body {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Inverter bordas e sombras um pouco para melhor contraste */
+.dark .card {
+  border-color: color-mix(in srgb, var(--color-border) 40%, transparent);
+  box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+}
+
+/* Links */
+.dark a { color: var(--color-accent); }
+.dark a:hover { color: var(--color-accent-600); }
+
+/* Input backgrounds */
+.dark .input, .dark .textarea, .dark .select {
+  background: #0e1116;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+/* Chart tooltip inversion (if necessary) */
+.dark .chartjs-tooltip {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
