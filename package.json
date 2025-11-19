@@ -1,5 +1,5 @@
 {
-  "name": "portfolio-gains-next",
+  "name": "portfolio",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -15,14 +15,14 @@
     "transform-gains": "ts-node scripts/transformGains.ts"
   },
   "dependencies": {
-    "next": "14.0.0",
+    "next": "14.2.33",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "5.4.2",
-    "tailwindcss": "^3.5.0",
-    "postcss": "^8.4.21",
+    "typescript": "5.1.6",
+    "tailwindcss": "^3.4.6",
+    "postcss": "^8.4.24",
     "autoprefixer": "^10.4.14",
-    "chart.js": "^4.4.0",
+    "chart.js": "^4.3.0",
     "react-chartjs-2": "^5.2.0",
     "clsx": "^1.2.1"
   },
@@ -37,7 +37,7 @@
     "ts-jest": "29.1.0",
     "@testing-library/react": "14.0.0",
     "@testing-library/jest-dom": "6.0.0",
-    "cypress": "12.17.0",
+    "cypress": "12.17.1",
     "ts-node": "10.9.1",
     "prettier": "3.2.2"
   }
