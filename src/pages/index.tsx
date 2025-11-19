@@ -5,7 +5,7 @@ import Hero from "../components/Hero";
 import ProjectCard from "../components/ProjectCard";
 import { fetchRepos } from "../services/github";
 import { Repository, ProjectGains } from "../types";
-import { BarGain, RadarGain } from "../components/MetricsChart";
+import { BarGain } from "../components/MetricsChart";
 import TimelineChart from "../components/TimelineChart";
 
 type HomeProps = {
@@ -32,12 +32,20 @@ export default function Home({ repos, gainsMap }: HomeProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div aria-hidden={false}>
             <h3 className="font-medium mb-2">Exemplo de categorias (por projeto)</h3>
-            {Object.values(gainsMap)[0] ? <BarGain entries={Object.values(gainsMap)[0].entries} /> : <p className="text-sm text-gray-500">Nenhum dado de ganho encontrado</p>}
+            {Object.values(gainsMap)[0] ? (
+              <BarGain entries={Object.values(gainsMap)[0].entries} />
+            ) : (
+              <p className="text-sm text-gray-500">Nenhum dado de ganho encontrado</p>
+            )}
           </div>
 
           <div>
             <h3 className="font-medium mb-2">Evolução (timeline)</h3>
-            {Object.values(gainsMap)[0] ? <TimelineChart timeline={Object.values(gainsMap)[0].timeline} /> : <p className="text-sm text-gray-500">Nenhuma timeline encontrada</p>}
+            {Object.values(gainsMap)[0] ? (
+              <TimelineChart timeline={Object.values(gainsMap)[0].timeline} />
+            ) : (
+              <p className="text-sm text-gray-500">Nenhuma timeline encontrada</p>
+            )}
           </div>
         </div>
       </section>
@@ -60,14 +68,12 @@ export const getStaticProps: GetStaticProps = async () => {
     repos = [];
   }
 
-  // Lê ganhos do arquivo JSON local
   const gainsPath = path.join(process.cwd(), "data", "gains.example.json");
   let rawGains: Record<string, any> = {};
   if (fs.existsSync(gainsPath)) {
     rawGains = JSON.parse(fs.readFileSync(gainsPath, "utf-8"));
   }
 
-  // Mapeia por repo-name — se não houver gains para repo, fica vazio
   const gainsMap: Record<string, ProjectGains> = {};
   for (const r of repos) {
     const key = r.name;
