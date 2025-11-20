@@ -22,6 +22,8 @@ jobs:
       - name: Test
         run: npm test
       - name: Build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
         run: npm run build
       - name: Deploy to Vercel (optional)
         if: success() && github.ref == 'refs/heads/main'
