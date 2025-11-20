@@ -1,49 +1,46 @@
-import fetch from "node-fetch";
 import { Repository } from "../types";
 
 const GITHUB_GRAPHQL = "https://api.github.com/graphql";
 
-export async function fetchRepos(githubUser: string, token: string): Promise<Repository[]> {
-  if (!token) throw new Error("GITHUB_TOKEN not provided");
+export async function fetchGitHubProjects(): Promise<Repository[]> {
+  const token = process.env.GITHUB_TOKEN;
+
+  if (!token) {
+    console.error("⚠ Missing GitHub Token! Add it to your Vercel environment variables.");
+    return [];
+  }
+
   const query = `
-    query ($login: String!) {
-      user(login: $login) {
-        repositories(first: 100, orderBy: {field: UPDATED_AT, direction: DESC}, privacy: PUBLIC) {
+    {
+      user(login: "GuilhermeSotti") {
+        repositories(first: 50, orderBy: { field: UPDATED_AT, direction: DESC }) {
           nodes {
-            id
             name
             description
             url
-            stargazerCount
-            forksCount
-            primaryLanguage { name }
             updatedAt
+            stargazerCount
           }
         }
       }
     }
   `;
+
   const res = await fetch(GITHUB_GRAPHQL, {
     method: "POST",
     headers: {
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
-      Authorization: `bearer ${token}`
     },
-    body: JSON.stringify({ query, variables: { login: githubUser } })
+    body: JSON.stringify({ query }),
+    next: { revalidate: 3600 },
   });
-  const json = await res.json();
-  if (json.errors) {
-    throw new Error(JSON.stringify(json.errors));
+
+  if (!res.ok) {
+    console.error("GitHub API Error:", await res.text());
+    return [];
   }
-  const nodes = json.data?.user?.repositories?.nodes ?? [];
-  return nodes.map((r: any) => ({
-    id: r.id,
-    name: r.name,
-    description: r.description,
-    url: r.url,
-    stars: r.stargazerCount,
-    forks: r.forksCount,
-    language: r.primaryLanguage?.name ?? "",
-    updatedAt: r.updatedAt
-  }));
+
+  const json = await res.json();
+  return json?.data?.user?.repositories?.nodes || [];
 }

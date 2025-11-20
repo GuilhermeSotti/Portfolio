@@ -12,8 +12,8 @@ export default function Navbar() {
           </div>
         </Link>
         <nav className="flex items-center gap-4">
-          <Link href="#projects"><a className="text-sm hover:underline">Projetos</a></Link>
-          <Link href="#metrics"><a className="text-sm hover:underline">Métricas</a></Link>
+          <Link href="#projects" className="text-sm hover:underline">Projetos</Link>
+          <Link href="#metrics" className="text-sm hover:underline">Métricas</Link>
           <a href="https://github.com/GuilhermeSotti" target="_blank" rel="noopener noreferrer" className="text-sm">GitHub</a>
           <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="text-sm">LinkedIn</a>
         </nav>

@@ -13,9 +13,7 @@ export default function ProjectCard({ repo }: { repo: Repository }) {
       </div>
       <div className="mt-4 flex gap-2">
         <a href={repo.url} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:underline text-sm">Ver no GitHub</a>
-        <Link href={`/projects/${encodeURIComponent(repo.name)}`}>
-          <a className="ml-auto text-sm bg-indigo-50 text-indigo-700 px-3 py-1 rounded">Detalhes</a>
-        </Link>
+        <Link href={`/projects/${encodeURIComponent(repo.name)}`} className="ml-auto text-sm bg-indigo-50 text-indigo-700 px-3 py-1 rounded">Detalhes</Link>
       </div>
     </article>
   );
