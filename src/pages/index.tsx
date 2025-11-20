@@ -5,7 +5,7 @@ import Hero from "../components/Hero";
 import ProjectCard from "../components/ProjectCard";
 import { fetchRepos } from "../services/github";
 import { Repository, ProjectGains } from "../types";
-import { BarGain } from "../components/MetricsChart";
+import { BarGain, RadarGain } from "../components/MetricsChart";
 import TimelineChart from "../components/TimelineChart";
 
 type HomeProps = {
@@ -33,7 +33,12 @@ export default function Home({ repos, gainsMap }: HomeProps) {
           <div aria-hidden={false}>
             <h3 className="font-medium mb-2">Exemplo de categorias (por projeto)</h3>
             {Object.values(gainsMap)[0] ? (
-              <BarGain entries={Object.values(gainsMap)[0].entries} />
+              <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
+                <BarGain entries={Object.values(gainsMap)[0].entries} />
+                <div className="mt-6">
+                  <RadarGain entries={Object.values(gainsMap)[0].entries} />
+                </div>
+              </div>
             ) : (
               <p className="text-sm text-gray-500">Nenhum dado de ganho encontrado</p>
             )}
