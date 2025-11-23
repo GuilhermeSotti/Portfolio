@@ -2,8 +2,21 @@
   "name": "portfolio",
   "version": "1.0.1",
   "private": true,
-  "engines": {
-    "node": "22.x"
+  "description": "Portfólio profissional com integração automática ao GitHub (GraphQL), painel de ganhos por projeto (dados via JSON), gráficos interativos (Chart.js), animações suaves e melhores práticas (TypeScript strict, Tailwind, testes, CI).",
+  "homepage": "https://github.com/GuilhermeSotti/Portfolio#readme",
+  "bugs": {
+    "url": "https://github.com/GuilhermeSotti/Portfolio/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuilhermeSotti/Portfolio.git"
+  },
+  "license": "ISC",
+  "author": "Guilherme Pires",
+  "type": "commonjs",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
   },
   "scripts": {
     "dev": "next dev -p 3000",
@@ -16,6 +29,7 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "transform-gains": "ts-node scripts/transformGains.ts",
+    "import:linkedin": "ts-node scripts/importLinkedin.ts",
     "start:ci": "next build && next start -p 3000"
   },
   "dependencies": {
@@ -27,8 +41,7 @@
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
-    "tailwindcss": "^3.4.8",
-    "typescript": "4.9.5"
+    "tailwindcss": "^3.4.8"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.0.0",
@@ -41,10 +54,14 @@
     "@typescript-eslint/parser": "^6.9.0",
     "cypress": "^15.7.0",
     "eslint": "^8.40.0",
-    "eslint-config-next": "^16.0.3",
+    "eslint-config-next": "^14.0.0",
     "jest": "^29.6.1",
     "prettier": "^3.2.2",
     "ts-jest": "^29.1.0",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

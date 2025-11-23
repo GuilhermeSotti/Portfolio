@@ -1,0 +1,20 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Guilherme Sotti",
+    "subtitle": "Front-end developer and web application architect.",
+    "cta": "See Projects"
+  },
+  "projects": {
+    "title": "Projects"
+  },
+  "footer": {
+    "copyright": "© {year} Guilherme Sotti"
+  }
+}

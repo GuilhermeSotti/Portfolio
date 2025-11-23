@@ -1,0 +1,51 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Next: Dev (com debugger)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "env": {
+        "NODE_OPTIONS": "--inspect=9229"
+      },
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "protocol": "inspector",
+      "skipFiles": ["<node_internals>/**"],
+      "timeout": 30000
+    },
+    {
+      "name": "Attach to Node (9229)",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "address": "localhost",
+      "restart": false,
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": null,
+      "protocol": "inspector",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "Launch Chrome to http://localhost:3000",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}",
+      "userDataDir": "${workspaceFolder}/.vscode/chrome",
+      "runtimeExecutable": "chrome",
+      "runtimeArgs": ["--disable-dev-shm-usage", "--no-sandbox"],
+      "preLaunchTask": "",
+      "timeout": 60000
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Next: Dev + Chrome",
+      "configurations": ["Next: Dev (com debugger)", "Launch Chrome to http://localhost:3000"]
+    }
+  ]
+}

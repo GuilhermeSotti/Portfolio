@@ -1,7 +1,7 @@
 import React from "react";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, RadialLinearScale, PointElement, LineElement } from "chart.js";
 import { Bar, Radar } from "react-chartjs-2";
-import { GainEntry } from "../types";
+import type { GainEntry } from "../types.js";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, RadialLinearScale, PointElement, LineElement);
 

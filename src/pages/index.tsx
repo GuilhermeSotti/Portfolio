@@ -1,100 +1,226 @@
 import fs from "fs";
 import path from "path";
-import type { GetStaticProps } from "next";
+import Head from "next/head";
+import type { GetStaticProps } from "next/types";
+import type { ReactElement } from "react";
+import { Repository, ProjectGains } from "../types";
+import { fetchRepos } from "../services/github";
+import { getMergedLinkedInProfile } from "../services/linkedin";
 import Hero from "../components/Hero";
 import ProjectCard from "../components/ProjectCard";
-import { fetchRepos } from "../services/github";
-import { Repository, ProjectGains } from "../types";
-import { BarGain, RadarGain } from "../components/MetricsChart";
+import ProfileCard from "../components/ProfileCard";
 import TimelineChart from "../components/TimelineChart";
+import { BarGain } from "../components/MetricsChart";
 
 type HomeProps = {
   repos: Repository[];
   gainsMap: Record<string, ProjectGains>;
+  linkedin: {
+    id?: string;
+    fullName: string;
+    headline?: string;
+    email?: string | null;
+    avatarUrl?: string | null;
+    experiences: Array<any>;
+    projects: Array<any>;
+    summary?: string;
+  };
 };
 
-export default function Home({ repos, gainsMap }: HomeProps) {
+const Home = ({ repos, gainsMap, linkedin }: HomeProps): ReactElement => {
+  const firstGainProjectKey = Object.keys(gainsMap).find((k) => (gainsMap[k]?.entries?.length ?? 0) > 0) ?? null;
+  const firstGain = firstGainProjectKey ? gainsMap[firstGainProjectKey] : null;
+
+  const aggregatedByLabel = Object.values(gainsMap).reduce<Record<string, number>>((acc, g) => {
+    if (!g?.entries) return acc;
+    for (const e of g.entries) {
+      acc[e.label] = (acc[e.label] || 0) + (e.value ?? 0);
+    }
+    return acc;
+  }, {});
+
+  const aggregatedEntries = Object.entries(aggregatedByLabel).map(([label, value]) => ({ label, value }));
+
   return (
     <>
+      <Head>
+        <title>{linkedin?.fullName ?? "Portfólio"} — Portfólio</title>
+        <meta name="description" content={linkedin?.summary ?? "Portfólio técnico e projetos"} />
+        <meta property="og:title" content={`${linkedin?.fullName ?? "Portfólio"} — Portfólio`} />
+        <meta property="og:description" content={linkedin?.summary ?? "Portfólio técnico e projetos"} />
+      </Head>
+
       <Hero />
-      <section id="projects" className="my-8">
-        <h2 className="text-2xl font-semibold mb-4">Projetos</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {repos.map((r) => (
-            <ProjectCard key={r.id} repo={r} />
-          ))}
-        </div>
-      </section>
 
-      <section id="metrics" className="my-12 bg-white p-6 rounded-lg shadow">
-        <h2 className="text-2xl font-semibold mb-4">Métricas de Ganhos</h2>
+      <div className="container mt-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left column: Profile + contact */}
+          <aside className="order-2 lg:order-1">
+            <ProfileCard profile={linkedin} />
+            <section className="card mt-6">
+              <h3 className="text-lg font-semibold mb-3">Contato</h3>
+              <p className="text-sm text-gray-400">
+                {linkedin?.email ? (
+                  <a href={`mailto:${linkedin.email}`} className="text-accent hover:underline">
+                    {linkedin.email}
+                  </a>
+                ) : (
+                  "Email não disponível"
+                )}
+              </p>
+              <div className="mt-4">
+                <a href={`https://www.linkedin.com/in/${linkedin?.id ?? ""}`} target="_blank" rel="noopener noreferrer" className="btn btn-ghost w-full">
+                  Ver perfil no LinkedIn
+                </a>
+              </div>
+            </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div aria-hidden={false}>
-            <h3 className="font-medium mb-2">Exemplo de categorias (por projeto)</h3>
-            {Object.values(gainsMap)[0] ? (
-              <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
-                <BarGain entries={Object.values(gainsMap)[0].entries} />
-                <div className="mt-6">
-                  <RadarGain entries={Object.values(gainsMap)[0].entries} />
+            <section className="card mt-6">
+              <h3 className="text-lg font-semibold mb-3">Resumo</h3>
+              <p className="text-sm text-gray-300">{linkedin?.summary ?? "Sem resumo disponível."}</p>
+            </section>
+          </aside>
+
+          {/* Middle column: Projects list */}
+          <main className="order-1 lg:order-2 lg:col-span-2">
+            <section id="projects" className="mb-8">
+              <h2 className="text-2xl font-bold mb-4">Projetos</h2>
+
+              {repos.length === 0 ? (
+                <p className="text-sm text-gray-400">Nenhum repositório encontrado. Verifique o usuário GitHub ou o token de API.</p>
+              ) : (
+                <div className="projects-grid">
+                  {repos.map((repo) => (
+                    <ProjectCard key={repo.id} repo={repo} />
+                  ))}
+                </div>
+              )}
+            </section>
+
+            <section id="metrics" className="card mt-6">
+              <h3 className="text-lg font-semibold mb-3">Métricas e Ganhos</h3>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h4 className="text-sm font-medium mb-2">Agregados por categoria</h4>
+                  {aggregatedEntries.length > 0 ? (
+                    <div className="chart-wrap">
+                      {/* Reaproveita o BarGain component */}
+                      <BarGain entries={aggregatedEntries} />
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-400">Nenhum dado de ganhos agregado disponível.</p>
+                  )}
+                </div>
+
+                <div>
+                  <h4 className="text-sm font-medium mb-2">Exemplo de evolução</h4>
+                  {firstGain && firstGain.timeline && firstGain.timeline.length > 0 ? (
+                    <div className="chart-wrap">
+                      <TimelineChart timeline={firstGain.timeline} />
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-400">Nenhuma timeline disponível para exemplo.</p>
+                  )}
                 </div>
               </div>
-            ) : (
-              <p className="text-sm text-gray-500">Nenhum dado de ganho encontrado</p>
-            )}
-          </div>
+            </section>
+          </main>
+        </div>
+      </div>
 
-          <div>
-            <h3 className="font-medium mb-2">Evolução (timeline)</h3>
-            {Object.values(gainsMap)[0] ? (
-              <TimelineChart timeline={Object.values(gainsMap)[0].timeline} />
-            ) : (
-              <p className="text-sm text-gray-500">Nenhuma timeline encontrada</p>
-            )}
+      <footer className="site-footer container">
+        <div className="flex items-center justify-between">
+          <div className="text-sm text-gray-500">© {new Date().getFullYear()} {linkedin?.fullName ?? "Autor"}</div>
+          <div className="text-sm">
+            <a href={`https://github.com/${process.env.NEXT_PUBLIC_GITHUB_USER ?? ""}`} target="_blank" rel="noreferrer" className="hover:underline">
+              GitHub
+            </a>
           </div>
         </div>
-      </section>
+      </footer>
     </>
   );
-}
+};
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const githubUser = process.env.NEXT_PUBLIC_GITHUB_USER;
-  const token = process.env.GITHUB_TOKEN;
+  const githubToken = process.env.GITHUB_TOKEN;
+  const linkedinToken = process.env.LINKEDIN_ACCESS_TOKEN;
+
   let repos: Repository[] = [];
+  let gainsMap: Record<string, ProjectGains> = {};
+  let linkedinData = {
+    id: undefined,
+    fullName: "Autor",
+    headline: "",
+    email: null,
+    avatarUrl: null,
+    experiences: [],
+    projects: [],
+    summary: ""
+  };
 
   try {
-    if (!githubUser) {
-      throw new Error("NEXT_PUBLIC_GITHUB_USER não configurado");
+    if (githubUser) {
+      repos = await fetchRepos(githubUser, githubToken ?? "");
+    } else {
+      console.warn("NEXT_PUBLIC_GITHUB_USER not set - skipping GitHub fetch");
     }
-    repos = await fetchRepos(githubUser, token ?? "");
-  } catch (err: any) {
-    console.error("Erro ao buscar repositórios:", err.message || err);
+  } catch (err) {
+    console.error("Erro ao buscar repositórios:", err);
     repos = [];
   }
 
-  const gainsPath = path.join(process.cwd(), "data", "gains.example.json");
-  let rawGains: Record<string, any> = {};
-  if (fs.existsSync(gainsPath)) {
-    rawGains = JSON.parse(fs.readFileSync(gainsPath, "utf-8"));
+  try {
+    const gainsPath = path.join(process.cwd(), "data", "gains.example.json");
+    if (fs.existsSync(gainsPath)) {
+      const raw = fs.readFileSync(gainsPath, "utf-8");
+      const rawGains = JSON.parse(raw);
+      for (const repoName of Object.keys(rawGains)) {
+        const entry = rawGains[repoName];
+        gainsMap[repoName] = {
+          repoName,
+          entries: entry.entries ?? [],
+          timeline: entry.timeline ?? []
+        };
+      }
+    }
+  } catch (err) {
+    console.error("Erro ao carregar gains local:", err);
+    gainsMap = {};
   }
 
-  const gainsMap: Record<string, ProjectGains> = {};
-  for (const r of repos) {
-    const key = r.name;
-    const g = rawGains[key];
-    gainsMap[key] = {
-      repoName: key,
-      entries: g?.entries ?? [],
-      timeline: g?.timeline ?? []
+  try {
+    const merged = await getMergedLinkedInProfile(linkedinToken);
+    linkedinData = {
+      id: merged.id,
+      fullName: merged.fullName ?? "Autor",
+      headline: merged.headline ?? "",
+      email: merged.email ?? null,
+      avatarUrl: merged.avatarUrl ?? null,
+      experiences: merged.experiences ?? [],
+      projects: merged.projects ?? [],
+      summary: merged.summary ?? ""
     };
+  } catch (err) {
+    console.error("Erro ao buscar LinkedIn / mesclar dados:", err);
+  }
+
+  for (const r of repos) {
+    if (!gainsMap[r.name]) {
+      gainsMap[r.name] = { repoName: r.name, entries: [], timeline: [] };
+    }
   }
 
   return {
     props: {
       repos,
-      gainsMap
+      gainsMap,
+      linkedin: linkedinData
     },
     revalidate: 60
   };
 };
+
+export default Home;

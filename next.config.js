@@ -1,11 +1,22 @@
-/** next.config.js */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["avatars.githubusercontent.com", "images.unsplash.com"]
-  },
-  // se no futuro quiser appDir (App Router), habilite conforme docs oficiais
-  // appDir: true, // apenas se você migrou para App Router e quer usar app/
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: "",
+        pathname: "/**"
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+        pathname: "/**"
+      }
+    ]
+  }
 };
 
 module.exports = nextConfig;
