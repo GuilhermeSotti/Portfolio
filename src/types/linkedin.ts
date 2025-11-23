@@ -1,46 +1,46 @@
-export type LinkedInApiProfile = {
-  id: string;
-  localizedFirstName?: string;
-  localizedLastName?: string;
-  localizedHeadline?: string;
-  profilePicture?: any;
-};
-
-export type LinkedInEmailResponse = {
-  elements: Array<{
-    'handle~'?: {
-      emailAddress?: string;
-    };
-  }>;
-};
-
+// src/types/linkedin.ts
 export type ExperienceItem = {
   id?: string;
   title: string;
   company?: string;
-  startDate?: string;
+  startDate?: string | null;
   endDate?: string | null;
-  location?: string;
-  description?: string;
+  location?: string | null;
+  description?: string | null;
 };
 
 export type ProjectItem = {
   id?: string;
   name: string;
-  description?: string;
-  url?: string;
-  startDate?: string;
+  description?: string | null;
+  url?: string | null;
+  startDate?: string | null;
   endDate?: string | null;
-  metrics?: Record<string, number>;
+  metrics?: Record<string, number> | null;
 };
 
-export type LinkedInMergedProfile = {
-  id?: string;
-  fullName: string;
-  headline?: string;
-  email?: string | null;
+/**
+ * Raw debug information returned by the scraper.
+ * Expand here se quiser adicionar novos campos no futuro.
+ */
+export type LinkedInRawInfo = {
+  jsonLd?: any;
+  og?: Record<string, string | undefined>;
+  errorStatus?: number;
+  bodySnippet?: string;
+  error?: string;
+  // permissive bag for anything else
+  [k: string]: any;
+};
+
+export type LinkedInPublicProfile = {
+  sourceUrl: string;
+  fullName?: string | null;
+  headline?: string | null;
+  location?: string | null;
   avatarUrl?: string | null;
+  summary?: string | null;
   experiences: ExperienceItem[];
   projects: ProjectItem[];
-  summary?: string;
+  raw?: LinkedInRawInfo;
 };
