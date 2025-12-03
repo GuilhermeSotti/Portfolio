@@ -1,33 +1,16 @@
-// src/pages/_app.tsx
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
-import Head from "next/head";
-import Layout from "../components/Layout";
-import { useEffect } from "react";
-import { LocaleProvider } from "../components/LocaleContext";
+import '../styles/globals.css';
+import type { AppProps } from 'next/app';
+import { TranslationProvider } from '../context/TranslationContext';
+import React from 'react';
 
-export default function MyApp({ Component, pageProps }: AppProps) {
-  useEffect(() => {
-    try {
-      const stored = typeof window !== "undefined" ? localStorage.getItem("site_theme") : null;
-      if (stored === "light") document.documentElement.classList.add("light");
-      else document.documentElement.classList.remove("light");
-    } catch {}
-  }, []);
+export default function App({ Component, pageProps }: AppProps) {
+  // pageProps.translations e pageProps.locale serão preenchidos em getStaticProps/getServerSideProps
+  const translations = pageProps.translations ?? {};
+  const locale = pageProps.locale ?? 'en';
 
   return (
-    <>
-      <Head>
-        <title>Guilherme Sotti — Portfólio</title>
-        <meta name="description" content="Portfólio técnico de Guilherme Sotti — projetos GitHub e métricas de ganhos." />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-      </Head>
-
-      <LocaleProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </LocaleProvider>
-    </>
+    <TranslationProvider translations={translations} locale={locale}>
+      <Component {...pageProps} />
+    </TranslationProvider>
   );
 }

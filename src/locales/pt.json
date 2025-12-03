@@ -1,0 +1,41 @@
+{
+  "site": {
+    "name": "Guilherme Sotti",
+    "description": "Portfólio — front-end, arquitetura e código limpo"
+  },
+  "nav": {
+    "projects": "Projetos",
+    "contact": "Contato",
+    "about": "Sobre"
+  },
+  "hero": {
+    "greeting": "Olá, eu sou {name}",
+    "intro": "Desenvolvedor front-end & fullstack. Este portfólio apresenta projetos, habilidades e formas de contato."
+  },
+  "topics": {
+    "about": { "title": "Sobre", "desc": "Resumo profissional e objetivos" },
+    "skills": { "title": "Skills", "desc": "Tecnologias e ferramentas" },
+    "projects": { "title": "Projetos", "desc": "Trabalhos e repositórios principais" },
+    "experience": { "title": "Experiência", "desc": "Histórico profissional e projetos" },
+    "contact": { "title": "Contato", "desc": "Como me encontrar / contratar" },
+    "more": { "title": "Extras", "desc": "Artigos, palestras e referências" }
+  },
+  "sections": {
+    "aboutTitle": "Sobre",
+    "skillsTitle": "Habilidades",
+    "projectsTitle": "Projetos",
+    "experienceTitle": "Experiência",
+    "contactTitle": "Contato"
+  },
+  "projectsCard": {
+    "viewOnGitHub": "Ver no GitHub →",
+    "notFound": "Projeto não encontrado"
+  },
+  "footer": {
+    "copyright": "© {year} {name}. Portfólio minimalista."
+  },
+  "actions": {
+    "email": "Email",
+    "viewProjects": "Ver projetos"
+  }
+}

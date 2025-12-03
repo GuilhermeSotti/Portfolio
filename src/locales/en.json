@@ -1,0 +1,41 @@
+{
+  "site": {
+    "name": "Guilherme Sotti",
+    "description": "Developer portfolio — front-end, architecture and nice code"
+  },
+  "nav": {
+    "projects": "Projects",
+    "contact": "Contact",
+    "about": "About"
+  },
+  "hero": {
+    "greeting": "Hi, I'm {name}",
+    "intro": "Frontend & fullstack developer. This portfolio presents projects, skills and ways to contact me."
+  },
+  "topics": {
+    "about": { "title": "About", "desc": "Professional summary and goals" },
+    "skills": { "title": "Skills", "desc": "Technologies and tools" },
+    "projects": { "title": "Projects", "desc": "Selected works and repos" },
+    "experience": { "title": "Experience", "desc": "Work history and achievements" },
+    "contact": { "title": "Contact", "desc": "How to reach me" },
+    "more": { "title": "Extras", "desc": "Articles, talks and references" }
+  },
+  "sections": {
+    "aboutTitle": "About",
+    "skillsTitle": "Skills",
+    "projectsTitle": "Projects",
+    "experienceTitle": "Experience",
+    "contactTitle": "Contact"
+  },
+  "projectsCard": {
+    "viewOnGitHub": "View on GitHub →",
+    "notFound": "Project not found"
+  },
+  "footer": {
+    "copyright": "© {year} {name}. Minimal portfolio."
+  },
+  "actions": {
+    "email": "Email",
+    "viewProjects": "View projects"
+  }
+}

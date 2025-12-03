@@ -1,22 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "avatars.githubusercontent.com",
-        port: "",
-        pathname: "/**"
-      },
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-        port: "",
-        pathname: "/**"
-      }
-    ]
+  i18n: {
+    locales: ['en', 'pt'],
+    defaultLocale: 'en',
+    localeDetection: true
   }
-};
+}
 
 module.exports = nextConfig;
